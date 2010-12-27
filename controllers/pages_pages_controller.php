@@ -1,9 +1,7 @@
 <?php
 
 class PagesPagesController extends PagesAppController {
-	
-	var $pageTitle = 'Pages';
-	
+		
 	function beforeFilter() {
 		
 		parent::beforeFilter();
@@ -12,9 +10,11 @@ class PagesPagesController extends PagesAppController {
 		
 		$this->Auth->deny('admin_edit');
 		
-		if ($this->action == 'admin_edit' || $this->action == 'admin_add' || $this->action == 'admin_delete') {
+		if ($this->admin) {
 			$this->Account->roles('Admin', 'PageEditor');
 		}
+		
+		$this->set('title_for_layout', __('Pages', true));
 		
 	}
 	
