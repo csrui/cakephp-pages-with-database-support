@@ -10,8 +10,8 @@ class PagesPagesController extends PagesAppController {
 		
 		$this->Auth->deny('admin_edit');
 		
-		if ($this->admin) {
-			$this->Account->roles('Admin', 'PageEditor');
+		if (isset($this->admin)) {
+			$this->Account->checkRoles('Admin', 'PageEditor');
 		}
 		
 		$this->set('title_for_layout', __('Pages', true));
