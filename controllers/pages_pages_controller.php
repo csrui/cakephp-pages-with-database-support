@@ -38,13 +38,12 @@ class PagesPagesController extends PagesAppController {
 			$page = $this->PagesPage->find('first', array('conditions' => $cond));
 		}
 		
-		$this->pageTitle = $page['PagesPage']['title'];
+		$this->set('title_for_layout', $page['PagesPage']['title']);
 		$this->set('page', $page);
 		
 	}
 	
-	function view() 
-	{
+	function view() {
 		
 		$path = func_get_args();
 
@@ -67,14 +66,27 @@ class PagesPagesController extends PagesAppController {
 		
 		$filename = VIEWS.'pages/'.join('/', $path).'.ctp';
 					
-		if (file_exists($filename))
-		{
+		if (file_exists($filename)) {
+			
+			/* DOESNT WORK BECAUSE TITLE MIGHT CONTAIN PHP CODE
+			$content = file_get_contents($filename);
+			$content = explode("\n", $content);
+			
+			var_dump($content);
+			
+			$content = $content[0];
+			$content = strip_tags($content);
+			$this->set('title_for_layout', $content);
+			*/
+			
+			$this->set('title_for_layout', __("$title", true));
+			
 			$this->render('view', null, $filename);
 			
-		}
-		else
-		{
+		} else {
+			
 			$this->get($path);
+			
 		}
 		
 	}
